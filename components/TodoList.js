@@ -1,19 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, Button } from 'react-native';
 
 import Todo from './Todo';
 
 const TodoList = () => {
+  const [text, setText] = useState('');
+  const [list, setList] = useState([
+    'Milk the cow',
+    'Herd the goats',
+  ]);
+
+  const onAddItem = () => {
+    if (!text) {
+      return;
+    }
+
+    setList([...list, text]);
+    setText('');
+  };
   return (
     <View style={styles.container}>
       <Text style={[styles.align, styles.font]}>Todo List</Text>
       <ScrollView>
-        <Todo name="Milk the cow" />
-        <Todo name="Herd the goats" />
+        {list.map((item, index) => (
+          <Todo key={index} item={item} />
+        ))}
       </ScrollView>
       <View>
-        <TextInput style={styles.input} />
-        <Button title="Add item" onPress={() => {}} />
+        <TextInput style={styles.input} value={text} onChangeText={setText} />
+        <Button title="Add item" onPress={onAddItem} />
       </View>
     </View>
   )
