@@ -18,12 +18,17 @@ const TodoList = () => {
     setList([...list, text]);
     setText('');
   };
+
+  const onDeleteItem = (itemToDelete) => {
+    const updatedList = list.filter((item => item !== itemToDelete));
+    setList(updatedList);
+  };
   return (
     <View style={styles.container}>
       <Text style={[styles.align, styles.font]}>Todo List</Text>
       <ScrollView>
         {list.map((item, index) => (
-          <Todo key={index} item={item} />
+          <Todo key={index} item={item} onDelete={onDeleteItem} />
         ))}
       </ScrollView>
       <View>
